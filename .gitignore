@@ -1,0 +1,27 @@
+# Intellij project files
+*.iml
+*.iws
+*.ipr
+*.ids
+.idea
+.pmd.log
+
+# Maven versions plugin backup
+*.versionsBackup
+
+# All target directories
+*/target/**
+
+# Frontend ignores
+node_modules
+jspm_modules
+jspm_packages
+node
+typings
+npm-debug.log
+
+# Project specific ignores
+downloaded.7z
+downloaded
+notes.txt
+src/includes

@@ -1,0 +1,208 @@
+[
+  {
+    "name": "M1 Kabaty -> Młociny",
+    "points": [
+      {"code":"M1M001", "name":"Kabaty", "lat":52.131562, "lon":21.065437},
+      {"code":"M1M002", "name":"Natolin", "lat":52.140341, "lon":21.057532},
+      {"code":"M1M003", "name":"Imielin", "lat":52.149834, "lon":21.045426},
+      {"code":"M1M004", "name":"Stokłosy", "lat":52.156184, "lon":21.034591},
+      {"code":"M1M005", "name":"Ursynów", "lat":52.161952, "lon":21.027652},
+      {"code":"M1M006", "name":"Służew", "lat":52.173512, "lon":21.026129},
+      {"code":"M1M007", "name":"Wilanowska", "lat":52.181785, "lon":21.022994},
+      {"code":"M1M008", "name":"Wierzbno", "lat":52.190227, "lon":21.016726},
+      {"code":"M1M009", "name":"Racławicka", "lat":52.199046, "lon":21.012043},
+      {"code":"M1M010", "name":"Pole Mokotowskie", "lat":52.209013, "lon":21.008146},
+      {"code":"M1M011", "name":"Politechnika", "lat":52.217554, "lon":21.014284},
+      {"code":"M1M012", "name":"Centrum", "lat":52.230503, "lon":21.010664},
+      {"code":"M1M013", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
+      {"code":"M1M014", "name":"Ratusz Arsenał", "lat":52.244915, "lon":21.001231},
+      {"code":"M1M015", "name":"Dworzec Gdański", "lat":52.258230, "lon":20.994437},
+      {"code":"M1M016", "name":"Plac Wilsona", "lat":52.268905, "lon":20.985103},
+      {"code":"M1M017", "name":"Marymont", "lat":52.271843, "lon":20.971805},
+      {"code":"M1M018", "name":"Słodowiec", "lat":52.276978, "lon":20.960009},
+      {"code":"M1M019", "name":"Stare Bielany", "lat":52.281458, "lon":20.949848},
+      {"code":"M1M020", "name":"Wawrzyszew", "lat":52.286307, "lon":20.939383},
+      {"code":"M1M021", "name":"Młociny", "lat":52.290582, "lon":20.930458}
+    ],
+    "times": [2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 3, 1, 2, 3, 3, 2, 1, 2, 2, 2],
+    "trains": {
+      "week": [
+        {"from":"00:00", "to":"00:10", "rate":[8,9]},
+        {"from":"05:00", "to":"05:33", "rate":[5,6]},
+        {"from":"05:33", "to":"05:48", "rate":[4]},
+        {"from":"05:48", "to":"08:46", "rate":[2,3]},
+        {"from":"08:46", "to":"13:25", "rate":[3,4]},
+        {"from":"13:25", "to":"19:01", "rate":[2,3]},
+        {"from":"19:01", "to":"19:50", "rate":[3,4]},
+        {"from":"19:50", "to":"23:19", "rate":[5,6,7]},
+        {"from":"23:19", "to":"24:00", "rate":[8,9]}
+      ],
+      "saturday": [
+        {"from":"00:00", "to":"00:15", "rate":[9,10]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30]},
+        {"from":"05:00", "to":"06:39", "rate":[7]},
+        {"from":"06:39", "to":"20:27", "rate":[5]},
+        {"from":"20:27", "to":"23:09", "rate":[7]},
+        {"from":"23:09", "to":"24:00", "rate":[9,10]}
+      ],
+      "sunday": [
+        {"from":"00:00", "to":"00:10", "rate":[9,10]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30]},
+        {"from":"05:00", "to":"08:33", "rate":[7]},
+        {"from":"08:33", "to":"20:28", "rate":[5,6]},
+        {"from":"20:28", "to":"23:31", "rate":[6,7]},
+        {"from":"23:31", "to":"24:00", "rate":[9,10]}
+      ]
+    }
+  },
+  {
+    "name": "M1 Młociny -> Kabaty",
+    "points": [
+      {"code":"M1K001", "name":"Młociny", "lat":52.290582, "lon":20.930458},
+      {"code":"M1K002", "name":"Wawrzyszew", "lat":52.286307, "lon":20.939383},
+      {"code":"M1K003", "name":"Stare Bielany", "lat":52.281458, "lon":20.949848},
+      {"code":"M1K004", "name":"Słodowiec", "lat":52.276978, "lon":20.960009},
+      {"code":"M1K005", "name":"Marymont", "lat":52.271843, "lon":20.971805},
+      {"code":"M1K006", "name":"Plac Wilsona", "lat":52.268905, "lon":20.985103},
+      {"code":"M1K007", "name":"Dworzec Gdański", "lat":52.258230, "lon":20.994437},
+      {"code":"M1K008", "name":"Ratusz Arsenał", "lat":52.244915, "lon":21.001231},
+      {"code":"M1K009", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
+      {"code":"M1K010", "name":"Centrum", "lat":52.230503, "lon":21.010664},
+      {"code":"M1K011", "name":"Politechnika", "lat":52.217554, "lon":21.014284},
+      {"code":"M1K012", "name":"Pole Mokotowskie", "lat":52.209013, "lon":21.008146},
+      {"code":"M1K013", "name":"Racławicka", "lat":52.199046, "lon":21.012043},
+      {"code":"M1K014", "name":"Wierzbno", "lat":52.190227, "lon":21.016726},
+      {"code":"M1K015", "name":"Wilanowska", "lat":52.181785, "lon":21.022994},
+      {"code":"M1K016", "name":"Służew", "lat":52.173512, "lon":21.026129},
+      {"code":"M1K017", "name":"Ursynów", "lat":52.161952, "lon":21.027652},
+      {"code":"M1K018", "name":"Stokłosy", "lat":52.156184, "lon":21.034591},
+      {"code":"M1K019", "name":"Imielin", "lat":52.149834, "lon":21.045426},
+      {"code":"M1K020", "name":"Natolin", "lat":52.140341, "lon":21.057532},
+      {"code":"M1K021", "name":"Kabaty", "lat":52.131562, "lon":21.065437}
+    ],
+    "times": [2, 2, 2, 1, 2, 3, 3, 2, 1, 3, 1, 2, 2, 1, 2, 2, 2, 2, 2, 2],
+    "trains": {
+      "week": [
+        {"from":"00:00", "to":"00:10", "rate":[7,8,9]},
+        {"from":"05:00", "to":"05:23", "rate":[4,5]},
+        {"from":"05:23", "to":"05:50", "rate":[4]},
+        {"from":"05:50", "to":"09:00", "rate":[2,3]},
+        {"from":"09:00", "to":"13:55", "rate":[3,4]},
+        {"from":"13:55", "to":"19:36", "rate":[2,3]},
+        {"from":"19:36", "to":"20:32", "rate":[3,4]},
+        {"from":"20:32", "to":"21:45", "rate":[5,6]},
+        {"from":"21:45", "to":"24:00", "rate":[7,8,9]}
+      ],
+      "saturday": [
+        {"from":"00:00", "to":"00:15", "rate":[9]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30, 45]},
+        {"from":"05:00", "to":"07:23", "rate":[7]},
+        {"from":"07:23", "to":"21:11", "rate":[5]},
+        {"from":"21:11", "to":"23:39", "rate":[7]},
+        {"from":"23:39", "to":"24:00", "rate":[9]}
+      ],
+      "sunday": [
+        {"from":"00:00", "to":"00:10", "rate":[8,9]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30, 45]},
+        {"from":"05:00", "to":"09:17", "rate":[6,7]},
+        {"from":"09:17", "to":"21:12", "rate":[5,6]},
+        {"from":"21:12", "to":"24:00", "rate":[6,7]}
+      ]
+    }
+  },
+  {
+    "name": "M2 Rondo Daszyńskiego -> Dworzec Wileński",
+    "points": [
+      {"code":"M2DW01", "name":"Rondo Daszyńskiego", "lat":52.230172, "lon":20.983279},
+      {"code":"M2DW02", "name":"Rondo ONZ", "lat":52.233129, "lon":20.998332},
+      {"code":"M2DW03", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
+      {"code":"M2DW04", "name":"Nowy Świat Uniwersytet", "lat":52.236930, "lon":21.017207},
+      {"code":"M2DW05", "name":"Centrum Nauki Kopernik", "lat":52.239839, "lon":21.031588},
+      {"code":"M2DW06", "name":"Stadion Narodowy", "lat":52.246835, "lon":21.043113},
+      {"code":"M2DW07", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883}
+    ],
+    "times": [2, 2, 1, 2, 2, 2],
+    "trains": {
+      "week": [
+        {"from":"00:00", "to":"00:35", "rate":[6,7,8]},
+        {"from":"05:03", "to":"06:21", "rate":[6,7]},
+        {"from":"06:21", "to":"06:36", "rate":[5,6]},
+        {"from":"06:36", "to":"06:58", "rate":[3,4]},
+        {"from":"06:58", "to":"09:10", "rate":[3]},
+        {"from":"09:10", "to":"15:01", "rate":[6]},
+        {"from":"15:01", "to":"18:35", "rate":[3]},
+        {"from":"18:35", "to":"21:04", "rate":[4,5]},
+        {"from":"21:04", "to":"24:00", "rate":[6,7,8]}
+      ],
+      "saturday": [
+        {"from":"00:00", "to":"00:15", "rate":[7,8]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30, 45]},
+        {"from":"03:00", "to":"04:00", "start":[0]},
+        {"from":"05:03", "to":"06:10", "rate":[7]},
+        {"from":"06:10", "to":"21:01", "rate":[6,7]},
+        {"from":"21:01", "to":"22:41", "rate":[7]},
+        {"from":"22:41", "to":"24:00", "rate":[7,8]}
+      ],
+      "sunday": [
+        {"from":"00:00", "to":"00:15", "rate":[7,8]},
+        {"from":"00:15", "to":"01:00", "start":[15, 30, 45]},
+        {"from":"01:00", "to":"02:00", "start":[0, 15, 30, 45]},
+        {"from":"02:00", "to":"03:00", "start":[0, 15, 30, 45]},
+        {"from":"05:03", "to":"23:55", "rate":[7,8]},
+        {"from":"23:55", "to":"24:00", "rate":[8]}
+      ]
+    }
+  },
+  {
+    "name": "M2 Dworzec Wileński -> Rondo Daszyńskiego",
+    "points": [
+      {"code":"M2RD01", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883},
+      {"code":"M2RD02", "name":"Stadion Narodowy", "lat":52.246835, "lon":21.043113},
+      {"code":"M2RD03", "name":"Centrum Nauki Kopernik", "lat":52.239839, "lon":21.031588},
+      {"code":"M2RD04", "name":"Nowy Świat Uniwersytet", "lat":52.236930, "lon":21.017207},
+      {"code":"M2RD05", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
+      {"code":"M2RD06", "name":"Rondo ONZ", "lat":52.233129, "lon":20.998332},
+      {"code":"M2RD07", "name":"Rondo Daszyńskiego", "lat":52.230172, "lon":20.983279}
+    ],
+    "times": [2, 2, 2, 1, 2, 2],
+    "trains": {
+      "week": [
+        {"from":"00:00", "to":"00:14", "rate":[6,7,8]},
+        {"from":"05:00", "to":"06:18", "rate":[6,7]},
+        {"from":"06:18", "to":"06:45", "rate":[3,4]},
+        {"from":"06:45", "to":"09:26", "rate":[3]},
+        {"from":"09:26", "to":"15:18", "rate":[6]},
+        {"from":"15:18", "to":"18:41", "rate":[3]},
+        {"from":"18:41", "to":"21:20", "rate":[4,5]},
+        {"from":"21:20", "to":"24:00", "rate":[6,7,8]}
+      ],
+      "saturday": [
+        {"from":"00:00", "to":"00:17", "rate":[8,9]},
+        {"from":"00:17", "to":"01:00", "start":[17, 32, 47]},
+        {"from":"01:00", "to":"02:00", "start":[2, 17, 32, 47]},
+        {"from":"02:00", "to":"03:00", "start":[2, 17, 32, 47]},
+        {"from":"05:00", "to":"06:27", "rate":[7]},
+        {"from":"06:27", "to":"21:17", "rate":[6,7]},
+        {"from":"21:17", "to":"23:35", "rate":[7,8]},
+        {"from":"23:35", "to":"24:00", "rate":[8,9]}
+      ],
+      "sunday": [
+        {"from":"00:00", "to":"00:17", "rate":[8,9]},
+        {"from":"00:17", "to":"01:00", "start":[17, 32, 47]},
+        {"from":"01:00", "to":"02:00", "start":[2, 17, 32, 47]},
+        {"from":"02:00", "to":"03:00", "start":[2, 17, 32, 47]},
+        {"from":"05:00", "to":"24:00", "rate":[7,8]}
+      ]
+    }
+  }
+]
