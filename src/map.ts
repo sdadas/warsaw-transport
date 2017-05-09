@@ -2,6 +2,7 @@ import * as L from "leaflet";
 import * as Voronoi from "voronoi";
 import {MapGradient, Point, Points, Routes, ShapeData} from "./types";
 import {DijkstraAlgorithm} from "./dijkstra";
+import {distance} from "./utils";
 
 export class ShapeMap {
 
@@ -9,6 +10,7 @@ export class ShapeMap {
     private points: Points;
     private visiblePoints: Point[];
     private gradient: MapGradient;
+    private voronoi: VoronoiDiagram;
 
     private map: L.Map;
     private layer: L.TileLayer;
@@ -23,12 +25,38 @@ export class ShapeMap {
         this.points = points;
         this.gradient = this.createMapGradient();
         this.visiblePoints = this.createVisiblePoints();
+        this.voronoi = this.createVoronoiDiagram();
         this.canvas = document.createElement("canvas");
         this.canvas.width = this.shape.size[0];
         this.canvas.height = this.shape.size[1];
         this.tooltip = document.getElementById("tooltip") as HTMLDivElement;
         this.tooltipVisible = false;
+
+        //this.initVoronoiRoutes();
         this.initMap(shape);
+    }
+
+    private createVoronoiDiagram(): VoronoiDiagram {
+        const bbox: BBox = {xl: 0, xr: this.shape.size[0] - 1, yt: 0, yb: this.shape.size[1]};
+        const sites: Site[] = this.visiblePoints;
+        const voronoi: Voronoi = new Voronoi();
+        return voronoi.compute(sites, bbox);
+    }
+
+    private initVoronoiRoutes(): void {
+        for(let edge of this.voronoi.edges) {
+            // check if points are on different sides of the Vistula
+            const first: Point = edge.lSite as Point;
+            const second: Point = edge.rSite as Point;
+            if(!first || !second) {
+                continue;
+            }
+            const dist: number = distance(first.lat, first.lon, second.lat, second.lon);
+            const time: number = Math.ceil(dist * 12);
+            console.log(time);
+            first.routes[second.code] = time;
+            second.routes[first.code] = time;
+        }
     }
 
     private createMapGradient(): MapGradient {
@@ -61,6 +89,7 @@ export class ShapeMap {
         const max: L.LatLngTuple = this.shape.box[1];
         for(let key of Object.keys(this.points)) {
             const point: Point = this.points[key];
+            point.code = key;
             if(point.lat > max[0] || point.lat < min[0] || point.lon > max[1] || point.lon < min[1]) {
                 continue;
             }
@@ -202,13 +231,8 @@ export class ShapeMap {
     }
 
     private drawVoronoiDiagram(): void {
-        const bbox: BBox = {xl: 0, xr: this.shape.size[0] - 1, yt: 0, yb: this.shape.size[1]};
-        const sites: Site[] = this.visiblePoints;
-        const voronoi: Voronoi = new Voronoi();
-        const diagram: VoronoiDiagram = voronoi.compute(sites, bbox);
-
         let ctx: CanvasRenderingContext2D = this.canvas.getContext("2d");
-        for(let cell of diagram.cells) {
+        for(let cell of this.voronoi.cells) {
             this.drawVoronoiCell(cell, ctx);
         }
     }

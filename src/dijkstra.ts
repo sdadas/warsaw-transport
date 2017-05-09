@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import * as TinyQueue from "tinyqueue";
 import {Point, Points, Routes, SimpleRoutes, TimedRoute, TimedRoutes} from "./types";
+import {distance} from "./utils";
 
 type PointPriority = {code: string, priority: number}
 
@@ -97,7 +98,7 @@ export class DijkstraAlgorithm {
             const point: Point = this.points[key];
             point.visited = false;
             point.cost = Number.MAX_SAFE_INTEGER;
-            const dist = this.dist(center[0], center[1], point.lat, point.lon);
+            const dist = distance(center[0], center[1], point.lat, point.lon);
             if(dist < min && Object.keys(point.routes).length > 0) {
                 min = dist;
                 nearest = point;
@@ -106,13 +107,6 @@ export class DijkstraAlgorithm {
         }
         nearest.cost = this.start + Math.floor(12 * min);
         return nearest;
-    }
-
-    private dist(lat1: number, lon1: number, lat2: number, lon2: number) {
-        const p = 0.017453292519943295;
-        const c = Math.cos;
-        const a = 0.5 - c((lat2 - lat1) * p)/2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))/2;
-        return 12742 * Math.asin(Math.sqrt(a));
     }
 
     private getMinMaxCost(): number[] {
