@@ -1,6 +1,6 @@
 import * as L from "leaflet";
 import * as Voronoi from "voronoi";
-import {Point, Points, Routes, ShapeData} from "./types";
+import {MapGradient, Point, Points, Routes, ShapeData} from "./types";
 import {DijkstraAlgorithm} from "./dijkstra";
 
 export class ShapeMap {
@@ -8,21 +8,43 @@ export class ShapeMap {
     private shape: ShapeData;
     private points: Points;
     private visiblePoints: Point[];
+    private gradient: MapGradient;
 
     private map: L.Map;
     private layer: L.TileLayer;
     private overlay: L.ImageOverlay;
     private canvas: HTMLCanvasElement;
     private center: L.LatLngTuple;
+    private tooltip: HTMLDivElement;
+    private tooltipVisible: boolean;
 
     constructor(shape: ShapeData, points: Points) {
         this.shape = shape;
         this.points = points;
+        this.gradient = this.createMapGradient();
         this.visiblePoints = this.createVisiblePoints();
         this.canvas = document.createElement("canvas");
         this.canvas.width = this.shape.size[0];
         this.canvas.height = this.shape.size[1];
+        this.tooltip = document.getElementById("tooltip") as HTMLDivElement;
+        this.tooltipVisible = false;
         this.initMap(shape);
+    }
+
+    private createMapGradient(): MapGradient {
+        let res: any = {start: [244, 234, 198], end: [136, 0, 21], steps: 121};
+        res.lookup = this.createGradientLookup(res.start, res.end, res.steps);
+        res.hexLookup = res.lookup.map((color: number[]) => this.rgbToHex(color));
+        return res as MapGradient;
+    }
+
+    private createGradientLookup(start: number[], end: number[], steps: number): number[][] {
+        let res: number[][] = new Array<number[]>(steps);
+        for(let idx=0; idx<steps; ++idx) {
+            const weight: number = idx / steps;
+            res[idx] = this.gradientValue(start, end, weight);
+        }
+        return res;
     }
 
     private pixelPosition(lat: number, lon: number): Site {
@@ -45,7 +67,7 @@ export class ShapeMap {
             let pos: Site = this.pixelPosition(point.lat, point.lon);
             point.x = pos.x;
             point.y = pos.y;
-            point.colorHex = this.randomColor();
+            point.colorHex = this.gradient.hexLookup[0];
             res.push(point);
         }
         return res;
@@ -61,8 +83,34 @@ export class ShapeMap {
 
         this.overlay = L.imageOverlay(this.draw(), shape.box, {opacity: 0.5, interactive: true});
         this.overlay.addTo(this.map);
+        this.overlay.on("click", (event: any) => this.onClick(event));
+        this.overlay.on("mousemove", (event: any) => this.onHover(event));
+    }
 
-        this.map.on("click", (event: any) => this.onClick(event));
+    private onHover(event: any) {
+        let loc: L.LatLngLiteral = event.latlng;
+        const pos: Site = this.pixelPosition(loc.lat, loc.lng);
+        if(this.isOutsideShape(pos.x, pos.y)) {
+            if(this.tooltipVisible) {
+                this.tooltipVisible = false;
+                this.tooltip.style.display = "none";
+            }
+            return;
+        } else {
+            if(!this.tooltipVisible) {
+                this.tooltipVisible = true;
+                this.tooltip.style.display = "block";
+            }
+            this.tooltip.style.left = (event.originalEvent.pageX + 10) + "px";
+            this.tooltip.style.top = (event.originalEvent.pageY - 7) + "px";
+            const color: any = this.canvas.getContext("2d").getImageData(pos.x, pos.y, 1, 1).data;
+            const hex: string = this.rgbToHex(color);
+            let idx: number = this.gradient.hexLookup.indexOf(hex);
+            idx = idx < 0 && hex === "#ffffff" ? 0 : idx;
+            if(idx >= 0) {
+                this.tooltip.innerHTML = idx.toString() + (idx < (this.gradient.steps - 1) ? " min" : "+ min");
+            }
+        }
     }
 
     private onClick(event: any): void {
@@ -84,18 +132,13 @@ export class ShapeMap {
         this.center = center;
         let routes: Routes = require(`./includes/routes_week_17.json`);
         let start: number = hour * 60;
-        let end: number = start + 120;
         let dijkstra: DijkstraAlgorithm = new DijkstraAlgorithm(this.points, routes, hour * 60);
         dijkstra.execute(center);
-
-        const color1: number[] = [244, 234, 198];
-        const color2: number[] = [136, 0, 21];
         for(let point of this.visiblePoints) {
-            const weight = Math.min((point.cost - start) / (end - start), 1.0);
-            point.color = this.gradientValue(color1, color2, weight);
-            point.colorHex = this.rgbToHex(point.color);
+            const colorIdx = Math.min(point.cost - start, this.gradient.steps - 1);
+            point.color = this.gradient.lookup[colorIdx];
+            point.colorHex = this.gradient.hexLookup[colorIdx];
         }
-
         this.overlay.setUrl(this.draw());
     }
 

@@ -8,6 +8,14 @@ interface ShapeData {
     size?: [number, number];
 }
 
+interface MapGradient {
+    start: number[];
+    end: number[];
+    steps: number;
+    lookup: number[][];
+    hexLookup: string[];
+}
+
 type SimpleRoute = number
 type TimedRoute = [number, number]
 type SimpleRoutes = {[key: string]: SimpleRoute}
