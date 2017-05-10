@@ -254,11 +254,7 @@ export class ShapeMap {
         let currentX = start.x;
         let currentY = start.y;
         for(let i=0; i<halfedges.length; ++i) {
-            let he: VoronoiHalfedge = halfedges[i];
             start = halfedges[i].getStartpoint();
-            if(currentX !== start.x || currentY !== start.y) {
-                console.log(`point mismatch: (${currentX}, ${currentY}) != (${start.x}, ${start.y})`);
-            }
             end = halfedges[i].getEndpoint();
             currentX = end.x;
             currentY = end.y;
