@@ -32,8 +32,9 @@ export class ShapeMap {
         this.tooltip = document.getElementById("tooltip") as HTMLDivElement;
         this.tooltipVisible = false;
 
-        //this.initVoronoiRoutes();
+        this.initVoronoiRoutes();
         this.initMap(shape);
+        this.repaint(17, "week", this.shape.center);
     }
 
     private createVoronoiDiagram(): VoronoiDiagram {
@@ -48,19 +49,23 @@ export class ShapeMap {
             // check if points are on different sides of the Vistula
             const first: Point = edge.lSite as Point;
             const second: Point = edge.rSite as Point;
-            if(!first || !second) {
+            if(!first || !second || this.riverSide(first.x, first.y) !== this.riverSide(second.x, second.y)) {
                 continue;
             }
             const dist: number = distance(first.lat, first.lon, second.lat, second.lon);
-            const time: number = Math.ceil(dist * 12);
-            console.log(time);
+            const time: number = Math.ceil(dist * 10);
             first.routes[second.code] = time;
             second.routes[first.code] = time;
         }
     }
 
+    private riverSide(x: number, y: number): number {
+        const point: number = this.shape.river[y];
+        return x > point ? 1 : -1;
+    }
+
     private createMapGradient(): MapGradient {
-        let res: any = {start: [244, 234, 198], end: [136, 0, 21], steps: 121};
+        let res: any = {start: [153, 217, 234], end: [237, 28, 36], steps: 121};
         res.lookup = this.createGradientLookup(res.start, res.end, res.steps);
         res.hexLookup = res.lookup.map((color: number[]) => this.rgbToHex(color));
         return res as MapGradient;
@@ -110,7 +115,7 @@ export class ShapeMap {
         this.layer = L.tileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {attribution, maxZoom: 18,});
         this.layer.addTo(this.map);
 
-        this.overlay = L.imageOverlay(this.draw(), shape.box, {opacity: 0.5, interactive: true});
+        this.overlay = L.imageOverlay(this.draw(), shape.box, {opacity: 0.6, interactive: true});
         this.overlay.addTo(this.map);
         this.overlay.on("click", (event: any) => this.onClick(event));
         this.overlay.on("mousemove", (event: any) => this.onHover(event));

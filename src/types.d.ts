@@ -6,6 +6,7 @@ interface ShapeData {
     hborder?: number[][];
     vborder?: number[][];
     size?: [number, number];
+    river?: number[];
 }
 
 interface MapGradient {

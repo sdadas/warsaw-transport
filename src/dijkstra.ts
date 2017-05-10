@@ -105,7 +105,7 @@ export class DijkstraAlgorithm {
                 nearest.code = key;
             }
         }
-        nearest.cost = this.start + Math.floor(12 * min);
+        nearest.cost = this.start + Math.floor(10 * min);
         return nearest;
     }
 
