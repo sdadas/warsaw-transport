@@ -5,5 +5,4 @@ import {ShapeMap} from "./map";
 import {Points, ShapeData} from "./types";
 
 const shape: ShapeData = require("./includes/warsaw.json");
-const points: Points = require("./includes/points.json");
-new ShapeMap(shape, points);
+new ShapeMap(shape);

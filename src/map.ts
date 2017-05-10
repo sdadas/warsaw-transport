@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import * as Voronoi from "voronoi";
-import {MapGradient, Point, Points, Routes, ShapeData} from "./types";
+import * as jQuery from "jquery";
+import {MapGradient, Point, Points, Routes, SelectItem, ShapeData} from "./types";
 import {DijkstraAlgorithm} from "./dijkstra";
 import {distance} from "./utils";
 
@@ -11,30 +12,41 @@ export class ShapeMap {
     private visiblePoints: Point[];
     private gradient: MapGradient;
     private voronoi: VoronoiDiagram;
+    private routes: Routes;
 
     private map: L.Map;
     private layer: L.TileLayer;
     private overlay: L.ImageOverlay;
+    private settings: SettingsControl;
     private canvas: HTMLCanvasElement;
     private center: L.LatLngTuple;
     private tooltip: HTMLDivElement;
     private tooltipVisible: boolean;
+    private hourSelect: HTMLSelectElement;
+    private daySelect: HTMLSelectElement;
+    private hour: number;
+    private day: string;
 
-    constructor(shape: ShapeData, points: Points) {
+    constructor(shape: ShapeData) {
         this.shape = shape;
-        this.points = points;
-        this.gradient = this.createMapGradient();
-        this.visiblePoints = this.createVisiblePoints();
-        this.voronoi = this.createVoronoiDiagram();
+        this.center = this.shape.center;
         this.canvas = document.createElement("canvas");
         this.canvas.width = this.shape.size[0];
         this.canvas.height = this.shape.size[1];
         this.tooltip = document.getElementById("tooltip") as HTMLDivElement;
         this.tooltipVisible = false;
+        this.initMap();
+        jQuery.ajax("./includes/points.json").then((data) => this.initRoutesLayer(data));
+    }
 
+    private initRoutesLayer(data: Points): void {
+        this.points = data;
+        this.gradient = this.createMapGradient();
+        this.visiblePoints = this.createVisiblePoints();
+        this.voronoi = this.createVoronoiDiagram();
         this.initVoronoiRoutes();
-        this.initMap(shape);
-        this.repaint(17, "week", this.shape.center);
+        this.initOverlay();
+        this.requestRepaint(this.center);
     }
 
     private createVoronoiDiagram(): VoronoiDiagram {
@@ -46,7 +58,6 @@ export class ShapeMap {
 
     private initVoronoiRoutes(): void {
         for(let edge of this.voronoi.edges) {
-            // check if points are on different sides of the Vistula
             const first: Point = edge.lSite as Point;
             const second: Point = edge.rSite as Point;
             if(!first || !second || this.riverSide(first.x, first.y) !== this.riverSide(second.x, second.y)) {
@@ -107,18 +118,26 @@ export class ShapeMap {
         return res;
     }
 
-    private initMap(shape: ShapeData) {
+    private initMap(): void {
         this.map = new L.Map("mapid");
-        this.map.setView(shape.center, 11);
-
+        this.map.setView(this.shape.center, 11);
         const attribution = `&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>`;
         this.layer = L.tileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {attribution, maxZoom: 18,});
         this.layer.addTo(this.map);
+    }
 
-        this.overlay = L.imageOverlay(this.draw(), shape.box, {opacity: 0.6, interactive: true});
+    private initOverlay(): void {
+        this.overlay = L.imageOverlay(this.draw(), this.shape.box, {opacity: 0.6, interactive: true});
         this.overlay.addTo(this.map);
         this.overlay.on("click", (event: any) => this.onClick(event));
         this.overlay.on("mousemove", (event: any) => this.onHover(event));
+
+        this.settings = new SettingsControl();
+        this.settings.addTo(this.map);
+        this.hourSelect = document.getElementById("wt-hour-select") as HTMLSelectElement;
+        this.daySelect = document.getElementById("wt-day-select") as HTMLSelectElement;
+        this.hourSelect.addEventListener("change", (event: Event) => this.requestRepaint(this.center));
+        this.daySelect.addEventListener("change", (event: Event) => this.requestRepaint(this.center));
     }
 
     private onHover(event: any) {
@@ -157,16 +176,32 @@ export class ShapeMap {
         }
         if(!this.isOutsideShape(pos.x, pos.y)) {
             const timeStart :number = performance.now();
-            this.repaint(17, "week", [loc.lat, loc.lng]);
+            this.requestRepaint([loc.lat, loc.lng]);
             console.log(`repaint in ${(performance.now() - timeStart) / 1000}s`);
         }
     }
 
-    private repaint(hour: number, day: string, center: L.LatLngTuple): void {
+    private requestRepaint(center: L.LatLngTuple): void {
+        let hour: number = parseInt(this.hourSelect.value, 10);
+        let day: string = this.daySelect.value;
+
+        if(!this.routes || hour !== this.hour || day !== this.day) {
+            const url: string = `./includes/routes_${day}_${hour}.json`;
+            jQuery.ajax(url).then((data) => {
+                this.routes = data;
+                this.repaint(hour, day, center);
+            });
+        } else {
+            this.repaint(hour, day, center);
+        }
+    }
+
+    private repaint(hour: number, day: string, center: L.LatLngTuple) {
+        this.hour = hour;
+        this.day = day;
         this.center = center;
-        let routes: Routes = require(`./includes/routes_week_17.json`);
         let start: number = hour * 60;
-        let dijkstra: DijkstraAlgorithm = new DijkstraAlgorithm(this.points, routes, hour * 60);
+        let dijkstra: DijkstraAlgorithm = new DijkstraAlgorithm(this.points, this.routes, hour * 60);
         dijkstra.execute(center);
         for(let point of this.visiblePoints) {
             const colorIdx = Math.min(point.cost - start, this.gradient.steps - 1);
@@ -288,5 +323,53 @@ export class ShapeMap {
         const x: number = Math.floor(Math.random() * (this.shape.size[0]));
         const y: number = Math.floor(Math.random() * (this.shape.size[1]));
         return {x, y};
+    }
+}
+
+class SettingsControl extends L.Control {
+
+    private container: HTMLDivElement;
+
+    onAdd(map: L.Map): HTMLElement {
+        this.container = L.DomUtil.create("div", "info") as HTMLDivElement;
+        this.createContent();
+        return this.container;
+    }
+
+    private createContent(): void {
+        let content: string[] = [];
+        content.push(`<h4>Komunikacja miejska w Warszawie</h4>`);
+        content.push(this.createDaySelect());
+        content.push(this.createHourSelect());
+        this.container.innerHTML = content.join("");
+    }
+
+    private createDaySelect(): string {
+        let items: SelectItem[] = [];
+        items.push({name: "Dzień roboczy", value: "week"});
+        items.push({name: "Sobota", value: "sat"});
+        items.push({name: "Niedziela", value: "sun"});
+        return this.createSelect("wt-day-select", items, "week");
+    }
+
+    private createHourSelect(): string {
+        let items: SelectItem[] = [];
+        for(let idx=0; idx<24; ++idx) {
+            const hour: string = idx.toString();
+            const name: string = (hour.length > 1 ? hour : "0" + hour) + ":00";
+            items.push({name: name, value: hour});
+        }
+        return this.createSelect("wt-hour-select", items, "17");
+    }
+
+    private createSelect(id: string, items: SelectItem[], selectedValue: string): string {
+        let res: string[] = [];
+        res.push(`<select id="${id}">`);
+        for(let idx=0; idx<items.length; ++idx) {
+            let selected: boolean = selectedValue === items[idx].value;
+            res.push(`<option value="${items[idx].value}" ${selected ? "selected" : ""}>${items[idx].name}</option>`);
+        }
+        res.push(`</select>`);
+        return res.join("");
     }
 }

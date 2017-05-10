@@ -1,5 +1,10 @@
 import * as L from "leaflet";
 
+interface SelectItem {
+    name: any;
+    value: any;
+}
+
 interface ShapeData {
     center?: L.LatLngTuple;
     box?: L.LatLngTuple[];
