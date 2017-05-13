@@ -122,7 +122,7 @@ export class ShapeMap {
         this.map = new L.Map("mapid");
         this.map.setView(this.shape.center, 11);
         const attribution = `&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>`;
-        this.layer = L.tileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {attribution, maxZoom: 18,});
+        this.layer = L.tileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {attribution, maxZoom: 18,});
         this.layer.addTo(this.map);
     }
 
