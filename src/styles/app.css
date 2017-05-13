@@ -9,6 +9,7 @@ html, body, #mapid {
 }
 
 #tooltip {
+    font: 14px/16px Arial, Helvetica, sans-serif;
     display: none;
     background: #000;
     color: #fff;
@@ -17,9 +18,9 @@ html, body, #mapid {
     padding: 5px;
     position: absolute;
     z-index: 1000;
-    width:50px;
+    width:60px;
     height:15px;
-    opacity: 0.5;
+    opacity: 0.6;
     border-radius: 5px;
     text-align: center;
     user-select: none;
@@ -32,14 +33,23 @@ html, body, #mapid {
     background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
-}
-
-.info h4 {
-    margin: 0 0 5px;
     color: #777;
 }
 
+.info a {
+    color: #555;
+}
+
+.info .info-content {
+    max-width:400px;
+    text-align:justify;
+}
+
+.info h4, .info h3, .info h2, .info h1 {
+    margin: 0 0 5px;
+}
+
 #wt-day-select, #wt-hour-select {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #777;
 }

@@ -130,7 +130,6 @@ export class ShapeMap {
         this.overlay = L.imageOverlay(this.draw(), this.shape.box, {opacity: 0.6, interactive: true});
         this.overlay.addTo(this.map);
         this.overlay.on("click", (event: any) => this.onClick(event));
-        this.overlay.on("mousemove", (event: any) => this.onHover(event));
 
         this.settings = new SettingsControl();
         this.settings.addTo(this.map);
@@ -138,12 +137,18 @@ export class ShapeMap {
         this.daySelect = document.getElementById("wt-day-select") as HTMLSelectElement;
         this.hourSelect.addEventListener("change", (event: Event) => this.requestRepaint(this.center));
         this.daySelect.addEventListener("change", (event: Event) => this.requestRepaint(this.center));
+
+        this.map.on("mousemove", (event: any) => this.onHover(event));
+        this.tooltip.addEventListener("mouseover", (event: any) => {
+            this.tooltipVisible = false;
+            this.tooltip.style.display = "none";
+        });
     }
 
     private onHover(event: any) {
         let loc: L.LatLngLiteral = event.latlng;
         const pos: Site = this.pixelPosition(loc.lat, loc.lng);
-        if(this.isOutsideShape(pos.x, pos.y)) {
+        if(this.isOutsideOverlay(pos.x, pos.y) || this.isOutsideShape(pos.x, pos.y)) {
             if(this.tooltipVisible) {
                 this.tooltipVisible = false;
                 this.tooltip.style.display = "none";
@@ -171,7 +176,7 @@ export class ShapeMap {
         const min: L.LatLngTuple = this.shape.box[0];
         const max: L.LatLngTuple = this.shape.box[1];
         const pos: Site = this.pixelPosition(loc.lat, loc.lng);
-        if(pos.y < 0 || pos.y >= this.shape.hborder.length || pos.x < 0 || pos.x > this.shape.vborder.length) {
+        if(this.isOutsideOverlay(pos.x, pos.y)) {
             return;
         }
         if(!this.isOutsideShape(pos.x, pos.y)) {
@@ -264,6 +269,10 @@ export class ShapeMap {
         return x < hb[0] || x > hb[1] || y < vb[0] || y > vb[1];
     }
 
+    private isOutsideOverlay(x: number, y: number): boolean {
+        return y < 0 || y >= this.shape.hborder.length || x < 0 || x > this.shape.vborder.length;
+    }
+
     private setPixel(image: ImageData, idx: number, values: number[]): void {
         for(let i=0; i<4; ++i) {
             image.data[idx + i] = values[i];
@@ -338,7 +347,9 @@ class SettingsControl extends L.Control {
 
     private createContent(): void {
         let content: string[] = [];
-        content.push(`<h4>Komunikacja miejska w Warszawie</h4>`);
+        let text: string = require("./legend.txt");
+        content.push(text);
+        content.push(`<span style="font-size:1.3em">Dzień i godzina: </span>`);
         content.push(this.createDaySelect());
         content.push(this.createHourSelect());
         this.container.innerHTML = content.join("");

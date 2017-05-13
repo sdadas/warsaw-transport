@@ -1,0 +1,15 @@
+<h3>Mapa atrakcyjności komunikacyjnej Warszawy</h3>
+<p class="info-content">
+Mapa pozwala na wizualizację dla określonego dnia oraz godziny, czasu dojazdu komunikacją miejską z wybranego punktu startowego do pozostałych części miasta.<br/>
+Kliknij w dowolnym miejscu na mapie aby wybrać punkt startowy.
+</p>
+
+<p class="info-content">
+Mapa jest rysowana w czasie rzeczywistym na podstawie grafu połączeń między przystankami, bazującego na
+<a href="http://www.ztm.waw.pl/?c=628">danych udostępnionych przez warszawski ZTM</a>.
+</p>
+
+<p class="info-content">
+Kody źródłowe wizualizacji dostępne są na
+<a href="https://github.com/sdadas/warsaw-transport">GitHubie</a>.
+</p>
