@@ -1,6 +1,6 @@
+import "whatwg-fetch";
 import * as L from "leaflet";
 import * as Voronoi from "voronoi";
-import * as jQuery from "jquery";
 import {MapGradient, Point, Points, Routes, SelectItem, ShapeData} from "./types";
 import {DijkstraAlgorithm} from "./dijkstra";
 import {distance} from "./utils";
@@ -36,7 +36,7 @@ export class ShapeMap {
         this.tooltip = document.getElementById("tooltip") as HTMLDivElement;
         this.tooltipVisible = false;
         this.initMap();
-        jQuery.ajax("./includes/points.json").then((data) => this.initRoutesLayer(data));
+        fetch("./includes/points.json").then((res) => res.json()).then((data:Points) => this.initRoutesLayer(data));
     }
 
     private initRoutesLayer(data: Points): void {
@@ -192,10 +192,10 @@ export class ShapeMap {
 
         if(!this.routes || hour !== this.hour || day !== this.day) {
             const url: string = `./includes/routes_${day}_${hour}.json`;
-            jQuery.ajax(url).then((data) => {
+            fetch(url).then((res) => res.json()).then((data: Routes) => {
                 this.routes = data;
                 this.repaint(hour, day, center);
-            }, (xhr, status, error) => {
+            }, (error) => {
                 console.error(error);
             });
         } else {
