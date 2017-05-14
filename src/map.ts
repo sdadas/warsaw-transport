@@ -195,6 +195,8 @@ export class ShapeMap {
             jQuery.ajax(url).then((data) => {
                 this.routes = data;
                 this.repaint(hour, day, center);
+            }, (xhr, status, error) => {
+                console.error(error);
             });
         } else {
             this.repaint(hour, day, center);
