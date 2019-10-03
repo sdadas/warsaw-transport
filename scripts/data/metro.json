@@ -127,9 +127,12 @@
       {"code":"M2DW04", "name":"Nowy Świat Uniwersytet", "lat":52.236930, "lon":21.017207},
       {"code":"M2DW05", "name":"Centrum Nauki Kopernik", "lat":52.239839, "lon":21.031588},
       {"code":"M2DW06", "name":"Stadion Narodowy", "lat":52.246835, "lon":21.043113},
-      {"code":"M2DW07", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883}
+      {"code":"M2DW07", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883},
+      {"code":"M2DW08", "name":"Szwedzka", "lat":52.262902, "lon":21.044117},
+      {"code":"M2DW09", "name":"Targówek Mieszkaniowy", "lat":52.269534, "lon":21.051381},
+      {"code":"M2DW10", "name":"Trocka", "lat":52.275232, "lon":21.055458}
     ],
-    "times": [2, 2, 1, 2, 2, 2],
+    "times": [2, 2, 1, 2, 2, 2, 2, 2, 2],
     "trains": {
       "week": [
         {"from":"00:00", "to":"00:35", "rate":[6,7,8]},
@@ -166,15 +169,18 @@
   {
     "name": "M2 Dworzec Wileński -> Rondo Daszyńskiego",
     "points": [
-      {"code":"M2RD01", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883},
-      {"code":"M2RD02", "name":"Stadion Narodowy", "lat":52.246835, "lon":21.043113},
-      {"code":"M2RD03", "name":"Centrum Nauki Kopernik", "lat":52.239839, "lon":21.031588},
-      {"code":"M2RD04", "name":"Nowy Świat Uniwersytet", "lat":52.236930, "lon":21.017207},
-      {"code":"M2RD05", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
-      {"code":"M2RD06", "name":"Rondo ONZ", "lat":52.233129, "lon":20.998332},
-      {"code":"M2RD07", "name":"Rondo Daszyńskiego", "lat":52.230172, "lon":20.983279}
+      {"code":"M2RD01", "name":"Trocka", "lat":52.275232, "lon":21.055458},
+      {"code":"M2RD02", "name":"Targówek Mieszkaniowy", "lat":52.269534, "lon":21.051381},
+      {"code":"M2RD03", "name":"Szwedzka", "lat":52.262902, "lon":21.044117},
+      {"code":"M2RD04", "name":"Dworzec Wileński", "lat":52.254200, "lon":21.034883},
+      {"code":"M2RD05", "name":"Stadion Narodowy", "lat":52.246835, "lon":21.043113},
+      {"code":"M2RD06", "name":"Centrum Nauki Kopernik", "lat":52.239839, "lon":21.031588},
+      {"code":"M2RD07", "name":"Nowy Świat Uniwersytet", "lat":52.236930, "lon":21.017207},
+      {"code":"M2RD08", "name":"Świętokrzyska", "lat":52.235188, "lon":21.008568},
+      {"code":"M2RD09", "name":"Rondo ONZ", "lat":52.233129, "lon":20.998332},
+      {"code":"M2RD10", "name":"Rondo Daszyńskiego", "lat":52.230172, "lon":20.983279}
     ],
-    "times": [2, 2, 2, 1, 2, 2],
+    "times": [2, 2, 2, 2, 2, 2, 1, 2, 2],
     "trains": {
       "week": [
         {"from":"00:00", "to":"00:14", "rate":[6,7,8]},
