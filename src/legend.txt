@@ -5,11 +5,13 @@ Kliknij w dowolnym miejscu na mapie aby wybrać punkt startowy.
 </p>
 
 <p class="info-content">
-Mapa jest rysowana w czasie rzeczywistym na podstawie grafu połączeń między przystankami, bazującego na
+Mapa jest generowana na podstawie grafu połączeń między przystankami, bazującego na
 <a href="http://www.ztm.waw.pl/?c=628">danych udostępnionych przez warszawski ZTM</a>.
 </p>
 
 <p class="info-content">
 Kody źródłowe wizualizacji dostępne są na
 <a href="https://github.com/sdadas/warsaw-transport">GitHubie</a>.
+<br/>
+Ostatnia aktualizacja rozkładów - maj 2021.
 </p>

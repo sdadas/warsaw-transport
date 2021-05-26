@@ -16,9 +16,8 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "@types/es6-shim": "^0.31.33",
     "@types/leaflet": "^1.0.60",
-    "@types/node": "^7.0.15",
+    "@types/node": "^15.6.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.1",
     "file-loader": "^0.11.1",
@@ -30,7 +29,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "ts-loader": "^2.0.3",
-    "typescript": "^2.3.2",
+    "typescript": "^3.9.4",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.5"
   }
