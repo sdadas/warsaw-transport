@@ -76,7 +76,7 @@ export class ShapeMap {
     }
 
     private createMapGradient(): MapGradient {
-        let res: any = {start: [153, 217, 234], end: [237, 28, 36], steps: 121};
+        let res: any = {start: [0, 255, 0], end: [255, 0, 0], steps: 90};
         res.lookup = this.createGradientLookup(res.start, res.end, res.steps);
         res.hexLookup = res.lookup.map((color: number[]) => this.rgbToHex(color));
         return res as MapGradient;
@@ -127,7 +127,7 @@ export class ShapeMap {
     }
 
     private initOverlay(): void {
-        this.overlay = L.imageOverlay(this.draw(), this.shape.box, {opacity: 0.6, interactive: true});
+        this.overlay = L.imageOverlay(this.draw(), this.shape.box, {opacity: 0.8, interactive: true});
         this.overlay.addTo(this.map);
         this.overlay.on("click", (event: any) => this.onClick(event));
 
